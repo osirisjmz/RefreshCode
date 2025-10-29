@@ -1,0 +1,50 @@
+{
+  "project": {
+    "name": "MLL_Email_Classifier",
+    "version": "1.0",
+    "description": "Clasificador inteligente de correos Hotmail basado en Machine Learning"
+  },
+
+  "email_account": {
+    "imap_server": "outlook.office365.com",
+    "email_address": "osirisjmzmtz@hotmail.com",
+    "app_password": "xpougwgmqxiblkha",
+    "mailbox": "INBOX",
+    "fetch_limit": 50
+  },
+
+  "paths": {
+    "dataset_folder": "C:\\Users\\OcyriZ\\Documents\\RefreshCode\\MLL\\datasets",
+    "model_folder": "C:\\Users\\OcyriZ\\Documents\\RefreshCode\\MLL\\models",
+    "log_folder": "C:\\Users\\OcyriZ\\Documents\\RefreshCode\\MLL\\logs"
+  },
+
+  "ml_model": {
+    "vectorizer": "CountVectorizer",
+    "classifier": "MultinomialNB",
+    "test_size": 0.2,
+    "random_state": 42
+  },
+
+  "categories": [
+    "Work Offer",
+    "Personal",
+    "Learning",
+    "Banking",
+    "Spam"
+  ],
+
+ "azure_auth": {
+  "client_id": "16de5bd4-3fa0-4bc1-87e0-62ed2552d0fc",
+  "tenant_id": "2fda46a6-23dc-4da3-a0fa-464f3161d341",
+  "client_secret": "f7a20a14-251f-4015-8b3b-0219b02616f9",
+  "redirect_uri": "http://localhost:8000",
+  "authority": "https://login.microsoftonline.com/common",
+  "scope": [
+    "https://graph.microsoft.com/User.Read",
+    "https://graph.microsoft.com/Mail.Read",
+    "https://graph.microsoft.com/Mail.ReadWrite"
+  ]
+}
+
+}
