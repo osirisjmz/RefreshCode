@@ -1,0 +1,5 @@
+myvar = "oSIRIS"
+my_var = "Osiris"
+_my_var = "Osiris"
+myVar = "oSrIs"
+MYVAR = "OSIRIS"
