@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Hábitos de Estudio — Inferencia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <h1 class="mb-4 text-center">Dashboard — Hábitos de Estudio</h1>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Promedio por turno (barra)</div>
+          <div class="card-body"><canvas id="chartMeans"></canvas></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Proporción de aprobación por turno</div>
+          <div class="card-body"><canvas id="chartAprob"></canvas></div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Turno × Lugar de estudio (barras apiladas)</div>
+          <div class="card-body"><canvas id="chartTurnoLugar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-header fw-bold">Resultados numéricos</div>
+          <div class="card-body">
+            <pre id="numbers" class="mb-0" style="white-space:pre-wrap"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+async function load() {
+  const r = await fetch('/api/metrics');
+  const m = await r.json();
+
+  // ===== CHART: means =====
+  new Chart(document.getElementById('chartMeans'), {
+    type: 'bar',
+    data: {
+      labels: m.chart_means.labels.map(x => x.charAt(0).toUpperCase()+x.slice(1)),
+      datasets: [{label: 'Promedio', data: m.chart_means.data, borderWidth: 1}]
+    },
+    options: {scales: {y: {beginAtZero: true, suggestedMax: 100}}}
+  });
+
+  // ===== CHART: approval proportion =====
+  new Chart(document.getElementById('chartAprob'), {
+    type: 'bar',
+    data: {
+      labels: m.chart_approvals.labels.map(x => x.charAt(0).toUpperCase()+x.slice(1)),
+      datasets: [{label: 'Proporción de aprobación', data: m.chart_approvals.data, borderWidth: 1}]
+    },
+    options: {scales: {y: {beginAtZero: true, suggestedMax: 1}}}
+  });
+
+  // ===== CHART: Turno x Lugar (stacked) =====
+  new Chart(document.getElementById('chartTurnoLugar'), {
+    type: 'bar',
+    data: {
+      labels: m.chart_turno_lugar.labels,
+      datasets: [
+        {label: 'Mañana', data: m.chart_turno_lugar.series[0].data, borderWidth: 1},
+        {label: 'Tarde',  data: m.chart_turno_lugar.series[1].data, borderWidth: 1}
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { tooltip: {mode: 'index', intersect: false} },
+      scales: { x: {stacked: true}, y: {stacked: true, beginAtZero: true} }
+    }
+  });
+
+  // ===== NUMBERS / TESTS =====
+  const t = m.t_test, p = m.prop, c = m.chi2, s = m.shapiro;
+  const txt = `
+DESCRIPTIVOS:
+${m.desc.map(d => ` - ${d.turno}: n=${d.count}, media=${d.mean}, sd=${d.std}`).join('\n')}
+
+T-TEST (Welch):
+  n_m=${t.n_m}, n_t=${t.n_t}
+  medias: mañana=${t.mean_m}, tarde=${t.mean_t}
+  sd:     mañana=${t.sd_m},   tarde=${t.sd_t}
+  Levene: stat=${t.levene_stat}, p=${t.levene_p}
+  SE=${t.SE}, t=${t.t}, gl≈${t.df}, p=${t.p}
+  Hedges g=${t.hedges_g}
+
+PROPORCIONES (2 colas):
+  p1= ${p.p1} (aprob=${p.ap_m}/${t.n_m}),  p2= ${p.p2} (aprob=${p.ap_t}/${t.n_t})
+  pooled=${p.p_pool}, SE=${p.SE}, z=${p.z}, p=${p.p}
+  IC95% p_mañana=[${p.ci_m[0]}, ${p.ci_m[1]}]
+  IC95% p_tarde =[${p.ci_t[0]}, ${p.ci_t[1]}]
+
+CHI-CUADRADO:
+  Turno×Lugar:  chi2=${c.turno_lugar.chi2}, gl=${c.turno_lugar.dof}, p=${c.turno_lugar.p}
+  Genero×Herr:  chi2=${c.genero_herr.chi2}, gl=${c.genero_herr.dof}, p=${c.genero_herr.p}
+
+SHAPIRO-WILK Promedio:
+  Global: W=${s.global.W}, p=${s.global.p}
+  Mañana: W=${s.manana.W}, p=${s.manana.p}
+  Tarde : W=${s.tarde.W}, p=${s.tarde.p}
+`.trim();
+
+  document.getElementById('numbers').textContent = txt;
+}
+load();
+</script>
+</body>
+</html>
