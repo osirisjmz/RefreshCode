@@ -1,0 +1,16 @@
+{
+  "modo": "local",
+  "paths": {
+    "excels": "storage/Excels/",
+    "logs": "storage/Logs/",
+    "jsons": "storage/Archivos_JSON/",
+    "imagenes": "storage/Imagenes/"
+  },
+  "integraciones": {
+    "openai": true,
+    "whatsapp": true,
+    "drive_api": false,
+    "correo": true
+  },
+  "rol": "miriam"
+}

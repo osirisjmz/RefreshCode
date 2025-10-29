@@ -1,0 +1,35 @@
+{
+  "ID_VACANTE": "VAC-000",
+  "EMPRESA": "Empresa ejemplo",
+  "PUESTO": "Puesto ejemplo",
+  "DESCRIPCION": "Descripción de la vacante.",
+  "REQUISITOS": "Requisitos generales.",
+  "UBICACION": "Ciudad, Estado",
+  "TURNO": ["Día", "Noche"],
+  "HORARIO": {
+    "DIA": "",
+    "NOCHE": ""
+  },
+  "SALARIO_DIARIO": 0,
+  "SALARIO_SEMANAL": 0,
+  "BONOS": "",
+  "BENEFICIOS": [],
+  "PROCESO_ENTREVISTA": [],
+  "INGRESOS": [],
+  "MAPS_UBICACION": "",
+  "RUTAS_TRANSPORTE": {
+    "Ruta_1": "",
+    "Ruta_2": ""
+  },
+  "DATOS_CONTACTO": {
+    "NOMBRE": "",
+    "WHATSAPP": "",
+    "CORREO": ""
+  },
+  "NOTAS": "",
+  "ESTATUS": "Activa",
+  "FECHA_PUBLICACION": "",
+  "FUENTE": "Facebook",
+  "ENLACE_FB": "",
+  "ENLACE_WHATSAPP": ""
+}
