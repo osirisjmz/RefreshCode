@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auditoría de Logs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    body { background: #6d28d9; color: white; }
+    .filter-form { text-align:center; margin: 20px 0; }
+    input, button { margin: 5px; padding: 5px 10px; border-radius: 5px; }
+    button { background: #8b5cf6; color: white; border: none; }
+    button:hover { background: #7e22ce; }
+    table { width: 95%; margin: auto; border-collapse: collapse; background: #f3e8ff; color: black; border-radius: 8px; overflow: hidden; }
+    th, td { padding: 10px; text-align: center; }
+    th { background: #7e22ce; color: white; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🕓 Auditoría de Logs</h1>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn-back">⬅ Volver al Dashboard</a>
+  </header>
+
+  <main>
+    <form method="POST" class="filter-form">
+      <label>Fecha inicio:</label>
+      <input type="date" name="fecha_inicio">
+      <label>Fecha fin:</label>
+      <input type="date" name="fecha_fin">
+      <label>Usuario:</label>
+      <input type="text" name="usuario" placeholder="Ej. Mat001">
+      <label>Acción:</label>
+      <input type="text" name="accion" placeholder="Ej. LOGIN">
+      <button type="submit">🔍 Filtrar</button>
+      <button type="button" onclick="exportToExcel()">📤 Exportar Excel</button>
+    </form>
+
+    {% if logs %}
+    <table id="logsTable">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Sitio</th>
+          <th>Acción</th>
+          <th>Detalle</th>
+          <th>Resultado</th>
+          <th>Usuario</th>
+          <th>Reaction (ms)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr>
+          <td>{{ log[0].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td>{{ log[1] }}</td>
+          <td>{{ log[2] }}</td>
+          <td>{{ log[3][:50] }}{% if log[3]|length > 50 %}...{% endif %}</td>
+          <td>{{ log[4] }}</td>
+          <td>{{ log[5] }}</td>
+          <td>{{ log[6] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p style="text-align:center;">No se encontraron registros.</p>
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>Biblioteca Universitaria — Sistema de monitoreo de logs</p>
+  </footer>
+
+  <script>
+    // Exportar tabla a Excel
+    function exportToExcel() {
+      const table = document.getElementById('logsTable');
+      const wb = XLSX.utils.table_to_book(table, { sheet: "Logs" });
+      XLSX.writeFile(wb, "Auditoria_Logs.xlsx");
+    }
+  </script>
+</body>
+</html>

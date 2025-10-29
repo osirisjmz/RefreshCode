@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Biblioteca Universitaria</title>
+
+  <!-- Enlace al CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+  <div class="login-container">
+    <form action="/login" method="POST">
+  <h2>Iniciar Sesión</h2>
+
+  <div class="input-group">
+    <input type="text" name="num_matricula" placeholder="Matrícula" required>
+  </div>
+
+  <div class="input-group">
+    <input type="password" name="password" placeholder="Contraseña" required>
+  </div>
+
+  <button type="submit" class="btn">INGRESAR</button>
+
+  <p class="signup">
+    ¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a>
+  </p>
+</form>
+
+  </div>
+</body>
+</html>

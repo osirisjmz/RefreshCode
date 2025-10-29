@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro | Biblioteca Universitaria</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+  <div class="login-container">
+    <form method="POST" action="/register">
+      <h2>Crear Cuenta</h2>
+
+      <div class="input-group">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+      </div>
+
+      <div class="input-group">
+        <input type="text" name="apellido" placeholder="Apellido" required>
+      </div>
+
+      <div class="input-group">
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+      </div>
+
+      <div class="input-group">
+        <input type="text" name="num_matricula" placeholder="Matrícula" required>
+      </div>
+
+      <!-- Dropdown de carreras -->
+      <div class="input-group">
+        <select name="carrera_id" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #764ba2;color:#333;">
+          <option value="" disabled selected>Selecciona tu carrera</option>
+          {% for carrera in carreras %}
+            <option value="{{ carrera[0] }}">{{ carrera[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="input-group">
+        <input type="password" name="password" placeholder="Contraseña" required>
+      </div>
+
+      <button type="submit" class="btn">REGISTRAR</button>
+
+      <div class="social-login">
+        <p>O regístrate con</p>
+        <div class="social-buttons">
+          <a href="#" class="fb">F</a>
+          <a href="#" class="tw">T</a>
+          <a href="#" class="go">G</a>
+        </div>
+      </div>
+
+      <p class="signup">
+        ¿Ya tienes cuenta? <a href="{{ url_for('index') }}">INICIA SESIÓN</a>
+      </p>
+    </form>
+  </div>
+</body>
+</html>

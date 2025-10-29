@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Reservas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
+</head>
+<body>
+  <header>
+    <h1>🕒 Mis Reservas Activas</h1>
+    <a href="{{ url_for('home') }}" class="btn-back">⬅ Volver al inicio</a>
+  </header>
+
+  <main>
+    {% if reservas %}
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Fecha reserva</th>
+          <th>Límite retiro</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in reservas %}
+        <tr>
+          <td>{{ r.titulo }}</td>
+          <td>{{ r.fecha_reserva.strftime('%Y-%m-%d') }}</td>
+          <td>{{ r.fecha_limite_retiro.strftime('%Y-%m-%d') }}</td>
+          <td>{{ r.estado }}</td>
+          <td><a href="{{ url_for('cancelar_reserva', reserva_id=r.reserva_id) }}" class="btn-action-cancel">Cancelar</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No tienes reservas activas.</p>
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>Biblioteca Universitaria — Gestión de reservas</p>
+  </footer>
+</body>
+</html>

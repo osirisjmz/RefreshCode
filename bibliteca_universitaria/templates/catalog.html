@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - {{ categoria }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
+  <style>
+    .btn-action {
+      background: #10b981;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-right: 5px;
+      transition: 0.3s;
+    }
+    .btn-action:hover {
+      background: #059669;
+    }
+    .btn-reserve {
+      background: #3b82f6;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-reserve:hover {
+      background: #2563eb;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+  <script>
+    // Registrar logs al hacer clic en prestar o reservar
+    function logAndRedirect(url, accion, detalle) {
+      const start = performance.now();
+      fetch("/log_action", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sitio: url, accion, detalle })
+      }).then(() => {
+        const end = performance.now();
+        console.log(`Acción: ${accion} (${Math.round(end - start)} ms)`);
+        window.location.href = url;
+      }).catch(err => console.error("Error enviando log:", err));
+    }
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>📚 Libros de {{ categoria }}</h1>
+    <a href="{{ url_for('home') }}" class="btn-back">⬅ Volver al inicio</a>
+  </header>
+
+  <main>
+    {% if libros %}
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Editorial</th>
+          <th>Año</th>
+          <th>Copias</th>
+          <th>Estante</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for libro in libros %}
+        <tr>
+          <td>{{ libro[1] }}</td>
+          <td>{{ libro[2] }}</td>
+          <td>{{ libro[3] }}</td>
+          <td>{{ libro[4] }}</td>
+          <td>{{ libro[6] }}</td>
+          <td>{{ libro[7] }}</td>
+          <td class="actions">
+            <a href="#" class="btn-action" 
+               onclick="logAndRedirect('/prestamo/{{ libro[0] }}', 'LOAN_CLICK', 'Libro: {{ libro[1] }}')">Prestar</a>
+            <a href="#" class="btn-reserve" 
+               onclick="logAndRedirect('/reserva/{{ libro[0] }}', 'RESERVE_CLICK', 'Libro: {{ libro[1] }}')">Reservar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No se encontraron libros en esta categoría.</p>
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>Biblioteca Universitaria — Sistema de préstamos y reservas</p>
+  </footer>
+</body>
+</html>

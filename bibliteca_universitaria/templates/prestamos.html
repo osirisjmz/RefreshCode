@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Préstamos</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
+</head>
+<body>
+  <header>
+    <h1>📚 Mis Préstamos Activos</h1>
+    <a href="{{ url_for('home') }}" class="btn-back">⬅ Volver al inicio</a>
+  </header>
+
+  <main>
+    {% if prestamos %}
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Fecha préstamo</th>
+          <th>Fecha vencimiento</th>
+          <th>Estante</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in prestamos %}
+        <tr>
+          <td>{{ p.titulo }}</td>
+          <td>{{ p.fecha_prestamo.strftime('%Y-%m-%d') }}</td>
+          <td>{{ p.fecha_vencimiento.strftime('%Y-%m-%d') }}</td>
+          <td>{{ p.estante }}</td>
+          <td><a href="{{ url_for('devolver', prestamo_item_id=p.prestamo_item_id) }}" class="btn-action">Devolver</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No tienes préstamos activos.</p>
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>Biblioteca Universitaria — Gestión de préstamos</p>
+  </footer>
+</body>
+</html>

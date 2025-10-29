@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Biblioteca</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
+    <script defer src="{{ url_for('static', filename='js/catalog.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>📚 Bienvenido, {{ nombre }}</h1>
+        <p>Selecciona una categoría para explorar los libros</p>
+    </header>
+
+    <main>
+        <div class="category-grid">
+            <div class="category-card" data-category="Arquitectura">
+                🏛️ <span>Arquitectura</span>
+            </div>
+            <div class="category-card" data-category="Ciencias de la Salud">
+                🧬 <span>Ciencias de la Salud</span>
+            </div>
+            <div class="category-card" data-category="Ingeniería y Ciencias Exactas">
+                ⚙️ <span>Ingeniería y Ciencias Exactas</span>
+            </div>
+            <div class="category-card" data-category="Comunicación">
+                💬 <span>Comunicación</span>
+            </div>
+            <div class="category-card" data-category="Humanidades">
+                📖 <span>Humanidades</span>
+            </div>
+            <div class="category-card" data-category="Diseño">
+                🎨 <span>Diseño</span>
+            </div>
+        </div>
+    </main>
+
+    <div id="context-menu">
+        <ul>
+            <li id="view-details">📘 Ver detalles</li>
+            <li id="loan-book">📚 Realizar préstamo</li>
+            <li id="reserve-book">🕒 Reservar</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>Biblioteca Universitaria — Sistema de gestión 2025</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,121 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(180deg, #8b5cf6, #9333ea);
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    margin: 30px 0;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 40px;
+}
+
+.category-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 25px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+/* Menú contextual */
+#context-menu {
+    position: absolute;
+    display: none;
+    background: #fff;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    min-width: 180px;
+}
+
+#context-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 5px 0;
+}
+
+#context-menu li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+#context-menu li:hover {
+    background-color: #eee;
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+.book-table {
+  width: 85%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.book-table th, .book-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.book-row:hover {
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+}
+
+.btn-back {
+  color: white;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+.btn-action, .btn-action-cancel {
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-action {
+  background: #10b981;
+}
+
+.btn-action:hover {
+  background: #059669;
+}
+
+.btn-action-cancel {
+  background: #ef4444;
+}
+
+.btn-action-cancel:hover {
+  background: #dc2626;
+}
